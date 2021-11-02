@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Welcome</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="./css/main.css">
+</head>
+
+<body>
+	<div class="col-md-4 col-md-offset-4">
+		<div>
+			<center>
+				<div>
+					<p>Profil Détail</p>
+				</div>
+				<div class="form-group">
+					<form method="post" action="/games/:id" class="creationPartie" id="formGame">
+						<label for="inputName">Choisissez un nom</label>
+						<input type="text" name="nomPartie" id="inputName" class="form-control" required>
+						<select name="enemyChoice" id="enemy" class="form-control" required>
+							<option value="" disabled selected>Selectionnez un adversaire</option>
+							<% users.forEach(function(user) { %>
+								<option value="<%= user._id %>">
+									<%= user.username %>
+								</option>
+							<% }); %>
+						</select>
+						<button class="btn btn-success" type="submit">Créer une partie</button>
+					</form>
+				</div>
+				<span class="span"><%= error %></span>
+				<ul class="listePartie list-group">
+					<% games.forEach(function(game) { %>
+						<a href="games/<%= game._id %>">
+							<li class="list-group-item"> Créateur: <%= game.ownerName %> Nom: <%= game.nameGame %> Adversaire: <%= game.enemyName %> Partie: <%= game.state %></li>
+						</a>
+						<form action="/games/<%=  game._id %>?_method=DELETE" method='post'>
+							<input type="submit" value="Supprimer">
+						</form>
+					<% }); %>
+				</ul>
+			</center>
+		</div>
+		<div class="abc">
+			<a href="/logout">Logout</a>
+		</div>
+	</div>
+</body>
+
+</html>
